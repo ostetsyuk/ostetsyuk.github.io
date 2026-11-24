@@ -15,6 +15,7 @@ export const GET: APIRoute = () => {
     `- **JSON Resume:** ${cv.meta.site_url}/cv.json`,
     `- **LinkedIn:** ${cv.profile.linkedin}`,
     `- **GitHub:** ${cv.profile.github}`,
+    `- **YouTube (${cv.profile.youtube_label}):** ${cv.profile.youtube}`,
     `- **Last Updated:** ${cv.meta.updated}`,
     '',
     '## Professional Summary',
@@ -42,12 +43,20 @@ export const GET: APIRoute = () => {
       `- **Tech:** ${e.tech.join(', ')}`,
       '',
     ]),
+    '## Open Source & Technical Courses',
+    ...cv.courses_and_repos.flatMap((item) => [
+      `### ${item.title.en} (${item.kind.en})`,
+      `- ${item.description.en}`,
+      ...item.links.map((l) => `- ${l.label.en}: ${l.url}`),
+      '',
+    ]),
     '## Education',
     ...cv.education.map((ed) => `- ${ed.degree.en} — ${ed.institution.en} (${ed.year})`),
     '',
     '## Additional',
     `- **Languages:** ${cv.additional.languages.en}`,
     `- **Professional Writing:** ${cv.additional.writing.en}`,
+    `- **Technical Courses & OSS:** ${cv.additional.courses_summary.en}`,
     '',
   ];
 

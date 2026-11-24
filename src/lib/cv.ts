@@ -26,6 +26,8 @@ export interface CVData {
     linkedin_label: string;
     github: string;
     github_label: string;
+    youtube: string;
+    youtube_label: string;
     summary: BiText;
   };
   impact: Array<{
@@ -69,7 +71,20 @@ export interface CVData {
   additional: {
     languages: BiText;
     writing: BiText;
+    courses_summary: BiText;
   };
+  courses_and_repos: Array<{
+    id: string;
+    kind: BiText;
+    title: BiText;
+    badge: BiText;
+    description: BiText;
+    links: Array<{
+      label: BiText;
+      url: string;
+    }>;
+    tags: string[];
+  }>;
 }
 
 let cached: CVData | null = null;

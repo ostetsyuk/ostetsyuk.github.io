@@ -35,8 +35,14 @@ const cliPayload = {
   email: cv.profile.email,
   linkedin: cv.profile.linkedin,
   github: cv.profile.github,
+  youtube: cv.profile.youtube,
   site: cv.meta.site_url,
   pdf: cv.meta.pdf_path,
+  courses: cv.courses_and_repos.map((cr) => ({
+    title: cr.title,
+    kind: cr.kind,
+    links: cr.links.map((l) => ({ label: l.label, url: l.url })),
+  })),
   impact: cv.impact.map((m) => ({
     value: m.value,
     unit: m.unit,
@@ -225,6 +231,17 @@ const cliPayload = {
           style="color: var(--ink-secondary);"
         >
           <span>GitHub</span>
+          <span aria-hidden="true">↗</span>
+        </a>
+
+        <a
+          href={cv.profile.youtube}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="surface-card inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 transition-colors hover:opacity-85"
+          style="color: var(--ink-secondary);"
+        >
+          <span>YouTube · InferenceLab</span>
           <span aria-hidden="true">↗</span>
         </a>
 
@@ -485,10 +502,79 @@ const cliPayload = {
       </div>
     </section>
 
+    <!-- Open Source & Technical Courses -->
+    <section class="mb-12" aria-labelledby="coursesHeading">
+      <div class="mb-4 flex flex-wrap items-end justify-between gap-2">
+        <div>
+          <p class="font-mono-tech text-xs uppercase tracking-widest" style="color: var(--accent);">04 // OPEN SOURCE &amp; TECHNICAL COURSES</p>
+          <h2 id="coursesHeading" class="font-serif-editorial mt-0.5 text-2xl font-bold" style="color: var(--ink-primary);">
+            <span data-i18n="en">Public Repositories &amp; YouTube Engineering Courses</span>
+            <span data-i18n="ua">Публічні репозиторії та технічні курси на YouTube</span>
+          </h2>
+        </div>
+        <a
+          href={cv.profile.youtube}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="no-print font-mono-tech text-xs hover:underline"
+          style="color: var(--accent);"
+        >
+          youtube.com/@inference_lab ↗
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+        {cv.courses_and_repos.map((item) => (
+          <article
+            class="surface-card filterable-card flex flex-col justify-between rounded-xl p-5"
+            data-tags={item.tags.join('|')}
+          >
+            <div>
+              <p class="font-mono-tech text-[11px]" style="color: var(--ink-muted);">
+                <span data-i18n="en">{item.kind.en}</span>
+                <span data-i18n="ua">{item.kind.ua}</span>
+              </p>
+              <h3 class="mt-1.5 font-serif-editorial text-base font-bold leading-snug sm:text-lg" style="color: var(--ink-primary);">
+                <span data-i18n="en">{item.title.en}</span>
+                <span data-i18n="ua">{item.title.ua}</span>
+              </h3>
+              <div
+                class="mt-2 inline-block rounded-md px-2 py-0.5 font-mono-tech text-[11px] font-medium"
+                style="background-color: var(--accent-soft); color: var(--accent);"
+              >
+                <span data-i18n="en">{item.badge.en}</span>
+                <span data-i18n="ua">{item.badge.ua}</span>
+              </div>
+              <p class="mt-3 text-xs leading-relaxed" style="color: var(--ink-secondary);">
+                <span data-i18n="en">{item.description.en}</span>
+                <span data-i18n="ua">{item.description.ua}</span>
+              </p>
+            </div>
+
+            <div class="mt-4 flex flex-wrap gap-2 border-t pt-3 font-mono-tech text-[11px]" style="border-color: var(--border-hairline);">
+              {item.links.map((link) => (
+                <a
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-1 rounded-md border px-2.5 py-1 transition-colors hover:opacity-85"
+                  style="border-color: var(--border-strong); background-color: var(--bg-subtle); color: var(--ink-primary);"
+                >
+                  <span data-i18n="en">{link.label.en}</span>
+                  <span data-i18n="ua">{link.label.ua}</span>
+                  <span aria-hidden="true" style="color: var(--accent);">↗</span>
+                </a>
+              ))}
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
     <!-- Education & Additional -->
     <section class="mb-12 grid grid-cols-1 gap-4 md:grid-cols-2" aria-labelledby="educationHeading">
       <div class="surface-card rounded-xl p-5">
-        <p class="font-mono-tech text-xs uppercase tracking-widest" style="color: var(--accent);">04 // EDUCATION</p>
+        <p class="font-mono-tech text-xs uppercase tracking-widest" style="color: var(--accent);">05 // EDUCATION</p>
         <h2 id="educationHeading" class="font-serif-editorial mt-0.5 text-xl font-bold" style="color: var(--ink-primary);">
           <span data-i18n="en">Education</span>
           <span data-i18n="ua">Освіта</span>
@@ -513,7 +599,7 @@ const cliPayload = {
       </div>
 
       <div class="surface-card rounded-xl p-5">
-        <p class="font-mono-tech text-xs uppercase tracking-widest" style="color: var(--accent);">05 // ADDITIONAL</p>
+        <p class="font-mono-tech text-xs uppercase tracking-widest" style="color: var(--accent);">06 // ADDITIONAL</p>
         <h2 class="font-serif-editorial mt-0.5 text-xl font-bold" style="color: var(--ink-primary);">
           <span data-i18n="en">Languages &amp; Technical Writing</span>
           <span data-i18n="ua">Мови та технічні публікації</span>
@@ -580,7 +666,7 @@ const cliPayload = {
 
     <!-- Quick command chips -->
     <div class="flex flex-wrap gap-1.5 border-b border-[#1c2734] bg-[#0e141b] px-4 py-2 font-mono-tech text-[11px]">
-      {['help', 'whoami', 'impact', 'stack', 'cases', 'experience', 'contact', 'pdf', 'lang ua', 'lang en'].map((cmd) => (
+      {['help', 'whoami', 'impact', 'stack', 'cases', 'courses', 'experience', 'contact', 'pdf', 'lang ua', 'lang en'].map((cmd) => (
         <button
           type="button"
           data-cli-cmd={cmd}
@@ -787,8 +873,9 @@ const cliPayload = {
             '  impact       — key production metrics',
             '  stack        — core skills by domain',
             '  cases        — featured architecture case studies',
+            '  courses      — YouTube courses (InferenceLab) & open-source repos',
             '  experience   — career timeline',
-            '  contact      — email, LinkedIn, GitHub',
+            '  contact      — email, LinkedIn, GitHub, YouTube',
             '  pdf          — download ATS-friendly PDF resume',
             '  llms         — open /llms.txt (AI-readable CV)',
             '  lang en|ua   — switch interface language',
@@ -815,6 +902,13 @@ const cliPayload = {
           (c: any) => `#${esc(c.number)} <strong>${esc(c.title[lang])}</strong>\n   ${esc(c.metric[lang])}\n   Flow: ${esc(c.flow)}`
         );
         appendLine(lines.join('\n\n'));
+      } else if (lower === 'courses' || lower === 'repos' || lower === 'youtube') {
+        const lines = (cvData.courses || []).map(
+          (cr: any) =>
+            `• <strong>${esc(cr.title[lang])}</strong> (${esc(cr.kind[lang])})\n` +
+            cr.links.map((l: any) => `   → ${esc(l.label[lang])}: ${esc(l.url)}`).join('\n')
+        );
+        appendLine(lines.join('\n\n'));
       } else if (lower === 'experience') {
         const lines = (cvData.experience || []).map(
           (e: any) => `• ${esc(e.period[lang])} — <strong>${esc(e.role[lang])}</strong> @ ${esc(e.company[lang])}`
@@ -822,7 +916,7 @@ const cliPayload = {
         appendLine(lines.join('\n'));
       } else if (lower === 'contact') {
         appendLine(
-          `Email:    ${esc(cvData.email)}\nLinkedIn: ${esc(cvData.linkedin)}\nGitHub:   ${esc(cvData.github)}\nWeb CV:   ${esc(cvData.site)}`
+          `Email:    ${esc(cvData.email)}\nLinkedIn: ${esc(cvData.linkedin)}\nGitHub:   ${esc(cvData.github)}\nYouTube:  ${esc(cvData.youtube)}\nWeb CV:   ${esc(cvData.site)}`
         );
       } else if (lower === 'pdf') {
         appendLine('Downloading /Oleksiy_Stetsyuk_CV.pdf ...');

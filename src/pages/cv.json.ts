@@ -18,6 +18,7 @@ export const GET: APIRoute = () => {
       profiles: [
         { network: 'LinkedIn', username: 'stetsyuk', url: cv.profile.linkedin },
         { network: 'GitHub', username: cv.meta.github_username, url: cv.profile.github },
+        { network: 'YouTube', username: 'inference_lab', url: cv.profile.youtube },
       ],
     },
     work: cv.experience.map((e) => ({
@@ -29,12 +30,21 @@ export const GET: APIRoute = () => {
       highlights: e.bullets.en,
       keywords: e.tech,
     })),
-    projects: cv.case_studies.map((c) => ({
-      name: c.title.en,
-      description: c.summary.en,
-      highlights: [c.metric.en, c.delivery.en],
-      keywords: c.tags,
-    })),
+    projects: [
+      ...cv.case_studies.map((c) => ({
+        name: c.title.en,
+        description: c.summary.en,
+        highlights: [c.metric.en, c.delivery.en],
+        keywords: c.tags,
+      })),
+      ...cv.courses_and_repos.map((cr) => ({
+        name: cr.title.en,
+        description: cr.description.en,
+        url: cr.links[0]?.url,
+        highlights: cr.links.map((l) => `${l.label.en}: ${l.url}`),
+        keywords: cr.tags,
+      })),
+    ],
     skills: cv.skills.map((s) => ({
       name: s.category.en,
       keywords: s.items,

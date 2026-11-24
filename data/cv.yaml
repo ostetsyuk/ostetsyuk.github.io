@@ -26,6 +26,8 @@ profile:
   linkedin_label: linkedin.com/in/stetsyuk
   github: https://github.com/stetsyuka
   github_label: github.com/stetsyuka
+  youtube: https://www.youtube.com/@inference_lab
+  youtube_label: InferenceLab (YouTube)
   summary:
     en: >-
       DevOps and Site Reliability Engineer with 13+ years in production infrastructure, currently leading the SRE team.
@@ -549,3 +551,97 @@ additional:
   writing:
     en: "Author of an internal study guide on OpenTelemetry, VictoriaMetrics and observability practice (SLI/SLO, error budgets, burn-rate alerting, production-readiness checklists)"
     ua: "Автор внутрішнього навчального посібника з OpenTelemetry, VictoriaMetrics та практик observability (SLI/SLO, error budgets, burn-rate alerting, production-readiness checklists)"
+  courses_summary:
+    en: "Author of Ukrainian engineering courses on YouTube (InferenceLab — Claude Code Project Architect 10-ep series with github.com/stetsyuka/pulse-platform, Orca & VS Code Pro-Architect 2026)"
+    ua: "Автор технічних інженерних курсів на YouTube (InferenceLab — 10-серійний курс «Claude Code: Архітектор проєктів» з репо github.com/stetsyuka/pulse-platform, серії Orca та VS Code Pro-Архітектор 2026)"
+
+courses_and_repos:
+  - id: claude-code-course
+    kind:
+      en: Video Course (10 Episodes) · Open Source Repo
+      ua: Відеокурс (10 серій) · Відкритий репозиторій
+    title:
+      en: "Claude Code — Project Architect (Season 1)"
+      ua: "Claude Code — Архітектор проєктів (Сезон 1)"
+    badge:
+      en: InferenceLab · ep01 → ep10 checkpoints
+      ua: InferenceLab · чекпойнти ep01 → ep10
+    description:
+      en: >-
+        Hands-on 10-episode Ukrainian engineering course moving from chat-coding to systematic agentic software
+        architecture. Covers CLAUDE.md/AGENTS.md context design, sandboxing & permissions, Plan Mode, TDD + Git
+        worktrees, Hooks & Secret Shield, custom Skills/Plugins, MCP (FastMCP, Vault), Agent Swarm, and 24/7 autonomous
+        agents in armored CI/CD — built end-to-end on the companion FastAPI + Next.js repository pulse-platform.
+      ua: >-
+        Практичний 10-серійний інженерний курс українською — перехід від «чат-кодингу» до системної архітектури з
+        AI-агентами. Охоплює CLAUDE.md/AGENTS.md, пісочницю й дозволи, Plan Mode, TDD та Git worktrees, Hooks і Secret
+        Shield, скіли/плагіни, MCP (FastMCP, Vault), Agent Swarm і 24/7 агентів у захищеному CI/CD на базі наскрізного
+        репозиторію pulse-platform (FastAPI + Next.js).
+    links:
+      - label:
+          en: Watch Playlist (YouTube)
+          ua: Дивитись плейліст (YouTube)
+        url: https://www.youtube.com/playlist?list=PLfYLNqowvj9M
+      - label:
+          en: GitHub Repo (pulse-platform)
+          ua: GitHub репо (pulse-platform)
+        url: https://github.com/stetsyuka/pulse-platform
+    tags: [Agentic SRE, MCP, GitHub Actions, DevSecOps, Python, HashiCorp Vault]
+
+  - id: ide-architect-series
+    kind:
+      en: YouTube Engineering Series · InferenceLab
+      ua: Технічні серії на YouTube · InferenceLab
+    title:
+      en: "Orca & VS Code Pro-Architect 2026"
+      ua: "Orca та VS Code Pro-Архітектор 2026"
+    badge:
+      en: Two focused 2026 playlists
+      ua: Дві профільні серії 2026
+    description:
+      en: >-
+        Practical architectural breakdowns of modern AI-native engineering environments: parallel worktree orchestration
+        and multi-agent workflows in Orca, plus production-grade VS Code setup, automation, and secure agent tooling.
+      ua: >-
+        Практичні розбори сучасних AI-середовищ розробки: паралельна оркестрація worktrees та мультиагентні воркфлоу в
+        Orca, а також production-налаштування VS Code, автоматизація й безпечні інструменти для інженерів.
+    links:
+      - label:
+          en: Orca Pro-Architect 2026
+          ua: Orca Pro-Архітектор 2026
+        url: https://www.youtube.com/playlist?list=PLVXaOBDYT1go
+      - label:
+          en: VS Code Pro-Architect 2026
+          ua: VS Code Pro-Архітектор 2026
+        url: https://www.youtube.com/playlist?list=PLCbHCtEfN4y4
+    tags: [Agentic SRE, GitOps, DevSecOps]
+
+  - id: cv-as-code-repo
+    kind:
+      en: Open Source · CI/CD Proof-of-Work
+      ua: Open Source · CI/CD Proof-of-Work
+    title:
+      en: "CV-as-Code Pipeline (ostetsyuk.github.io)"
+      ua: "CV-as-Code пайплайн (ostetsyuk.github.io)"
+    badge:
+      en: Single YAML → Web + ATS PDF + /llms.txt
+      ua: Один YAML → Web + ATS PDF + /llms.txt
+    description:
+      en: >-
+        This resume itself is built as version-controlled infrastructure: one bilingual YAML source validated in GitHub
+        Actions (including automated PII checks), compiled into a 2-page RenderCV/Typst ATS PDF, a zero-bloat Astro +
+        Tailwind Web CV, /llms.txt for AI screeners, and /cv.json.
+      ua: >-
+        Це резюме побудоване як інфраструктура в коді: єдиний двомовний YAML із валідацією в GitHub Actions (включно з
+        перевіркою приватності), автоматичною збіркою 2-сторінкового ATS PDF через RenderCV/Typst, швидкого Web CV на
+        Astro + Tailwind, /llms.txt для AI-скринерів і /cv.json.
+    links:
+      - label:
+          en: Source Repository
+          ua: Репозиторій коду
+        url: https://github.com/ostetsyuk/ostetsyuk.github.io
+      - label:
+          en: YouTube Channel (@inference_lab)
+          ua: Канал YouTube (@inference_lab)
+        url: https://www.youtube.com/@inference_lab
+    tags: [GitHub Actions, IaC, GitOps]

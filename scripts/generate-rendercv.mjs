@@ -61,6 +61,7 @@ const rendercvDoc = {
       education: educationEntries,
       additional: [
         { label: 'Languages', details: cv.additional.languages.en },
+        { label: 'Technical courses & OSS', details: cv.additional.courses_summary.en },
         { label: 'Professional writing', details: cv.additional.writing.en },
       ],
     },
