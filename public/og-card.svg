@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#edf2f7" fill-opacity="0.08"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="#0b0f13"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <rect x="48" y="48" width="1104" height="534" rx="18" fill="#12181f" stroke="#222d39" stroke-width="2"/>
+  <circle cx="98" cy="108" r="6" fill="#2dd4bf"/>
+  <text x="118" y="114" font-family="monospace" font-size="18" fill="#2dd4bf" letter-spacing="1.5">CV-AS-CODE · REMOTE (UTC+2/+3) · OSTETSYUK.GITHUB.IO</text>
+  <text x="92" y="218" font-family="Georgia, serif" font-size="68" font-weight="700" fill="#edf2f7">Oleksiy Stetsyuk</text>
+  <text x="92" y="274" font-family="sans-serif" font-size="30" fill="#9aa8b8">Senior DevOps / Site Reliability Engineer · Infrastructure Team Lead</text>
+  <line x1="92" y1="316" x2="1108" y2="316" stroke="#222d39" stroke-width="1.5"/>
+  <g font-family="monospace">
+    <rect x="92" y="352" width="232" height="128" rx="12" fill="#18212b" stroke="#263445"/>
+    <text x="114" y="408" font-size="40" font-weight="700" fill="#2dd4bf">13+</text>
+    <text x="114" y="446" font-size="16" fill="#9aa8b8">Years Production</text>
+
+    <rect x="348" y="352" width="232" height="128" rx="12" fill="#18212b" stroke="#263445"/>
+    <text x="370" y="408" font-size="40" font-weight="700" fill="#2dd4bf">170+</text>
+    <text x="370" y="446" font-size="16" fill="#9aa8b8">Apps &amp; APIs (SLI/SLO)</text>
+
+    <rect x="604" y="352" width="232" height="128" rx="12" fill="#18212b" stroke="#263445"/>
+    <text x="626" y="408" font-size="40" font-weight="700" fill="#2dd4bf">67</text>
+    <text x="626" y="446" font-size="16" fill="#9aa8b8">GitLab CI Monitor</text>
+
+    <rect x="860" y="352" width="248" height="128" rx="12" fill="#18212b" stroke="#263445"/>
+    <text x="882" y="408" font-size="36" font-weight="700" fill="#f59e0b">11-wave</text>
+    <text x="882" y="446" font-size="16" fill="#9aa8b8">OIDC Azure Patching</text>
+  </g>
+  <text x="92" y="542" font-family="monospace" font-size="18" fill="#728294">Azure · AKS · Terraform · Ansible · GitLab CI/CD · OpenTelemetry · Prometheus · HashiCorp Vault · Agentic SRE</text>
+</svg>

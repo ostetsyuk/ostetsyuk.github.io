@@ -1,0 +1,238 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: light dark;
+
+  &:has(> head > meta[name="color-scheme"][content="dark"]) {
+    color-scheme: dark;
+  }
+  &:has(> head > meta[name="color-scheme"][content="light"]) {
+    color-scheme: light;
+  }
+
+  --bg-canvas: light-dark(#f6f5f0, #0b0f13);
+  --bg-surface: light-dark(#ffffff, #12181f);
+  --bg-subtle: light-dark(#eeece5, #18212b);
+  --bg-terminal: #0c1116;
+
+  --ink-primary: light-dark(#14181d, #edf2f7);
+  --ink-secondary: light-dark(#444e59, #9aa8b8);
+  --ink-muted: light-dark(#66717e, #728294);
+
+  --border-hairline: light-dark(#dedbd2, #222d39);
+  --border-strong: light-dark(#c5c0b4, #334354);
+
+  --accent: light-dark(#0f766e, #2dd4bf);
+  --accent-soft: light-dark(rgba(15, 118, 110, 0.1), rgba(45, 212, 191, 0.12));
+  --accent-border: light-dark(rgba(15, 118, 110, 0.35), rgba(45, 212, 191, 0.38));
+
+  --signal: light-dark(#b45309, #f59e0b);
+  --signal-soft: light-dark(rgba(180, 83, 9, 0.1), rgba(245, 158, 11, 0.14));
+
+  --grid-dot: light-dark(rgba(20, 24, 29, 0.06), rgba(237, 242, 247, 0.06));
+  --shadow-card: light-dark(0 1px 2px rgba(20, 24, 29, 0.04), 0 1px 3px rgba(0, 0, 0, 0.35));
+
+  --font-serif: "IBM Plex Serif", Georgia, serif;
+  --font-sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: var(--font-sans);
+  background-color: var(--bg-canvas);
+  color: var(--ink-primary);
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background-color: var(--bg-canvas);
+  background-image: radial-gradient(var(--grid-dot) 1px, transparent 1px);
+  background-size: 22px 22px;
+  color: var(--ink-primary);
+  line-height: 1.6;
+}
+
+/* Language branching */
+html[data-lang="en"] [data-i18n="ua"] {
+  display: none !important;
+}
+html[data-lang="ua"] [data-i18n="en"] {
+  display: none !important;
+}
+html[data-lang="en"] [data-lang-btn="en"],
+html[data-lang="ua"] [data-lang-btn="ua"] {
+  background-color: var(--accent-soft);
+  color: var(--accent);
+}
+html[data-lang="en"] [data-lang-btn="ua"],
+html[data-lang="ua"] [data-lang-btn="en"] {
+  background-color: transparent;
+  color: var(--ink-secondary);
+}
+
+/* Theme toggle icon branching (no JS needed to stay synced with OS preference) */
+.theme-icon-to-light {
+  display: none;
+}
+.theme-icon-to-dark {
+  display: inline-flex;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not(:has(> head > meta[name="color-scheme"][content="light"])) .theme-icon-to-light {
+    display: inline-flex;
+  }
+  :root:not(:has(> head > meta[name="color-scheme"][content="light"])) .theme-icon-to-dark {
+    display: none;
+  }
+}
+
+:root:has(> head > meta[name="color-scheme"][content="dark"]) .theme-icon-to-light {
+  display: inline-flex;
+}
+:root:has(> head > meta[name="color-scheme"][content="dark"]) .theme-icon-to-dark {
+  display: none;
+}
+:root:has(> head > meta[name="color-scheme"][content="light"]) .theme-icon-to-light {
+  display: none;
+}
+:root:has(> head > meta[name="color-scheme"][content="light"]) .theme-icon-to-dark {
+  display: inline-flex;
+}
+
+.font-serif-editorial {
+  font-family: var(--font-serif);
+}
+
+.font-mono-tech {
+  font-family: var(--font-mono);
+}
+
+.surface-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  box-shadow: var(--shadow-card);
+}
+
+.skill-chip {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  line-height: 1.2;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  border: 1px solid var(--border-hairline);
+  background-color: var(--bg-subtle);
+  color: var(--ink-secondary);
+  cursor: pointer;
+  transition: border-color 140ms ease, background-color 140ms ease, color 140ms ease, transform 140ms ease;
+}
+
+.skill-chip:hover {
+  border-color: var(--accent-border);
+  color: var(--accent);
+}
+
+.skill-chip[aria-pressed="true"] {
+  background-color: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.filterable-card {
+  transition: opacity 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+
+.filterable-card[data-dimmed="true"] {
+  opacity: 0.34;
+}
+
+.filterable-card[data-matched="true"] {
+  border-color: var(--accent);
+}
+
+/* Native <dialog> CLI Modal: modern-web-guidance compliant */
+dialog.cli-modal {
+  padding: 0;
+  border: 1px solid #263445;
+  border-radius: 14px;
+  background: var(--bg-terminal);
+  color: #e2edf5;
+  width: min(760px, calc(100vw - 1.5rem));
+  max-height: min(82dvh, 660px);
+  margin: auto;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+}
+
+dialog.cli-modal:modal {
+  overscroll-behavior: contain;
+}
+
+dialog.cli-modal::backdrop {
+  background-color: rgba(7, 10, 14, 0.72);
+  backdrop-filter: blur(4px);
+  overflow: hidden;
+  overscroll-behavior: contain;
+}
+
+/* Staggered load reveal */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    animation: fadeSlideUp 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .reveal-delay-1 { animation-delay: 60ms; }
+  .reveal-delay-2 { animation-delay: 120ms; }
+  .reveal-delay-3 { animation-delay: 180ms; }
+}
+
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Focus rings */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Clean print fallback */
+@media print {
+  :root {
+    color-scheme: light !important;
+  }
+  body {
+    background: #ffffff !important;
+    background-image: none !important;
+    color: #111111 !important;
+    font-size: 10pt;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .surface-card {
+    box-shadow: none !important;
+    border-color: #d4d4d4 !important;
+    break-inside: avoid;
+  }
+  a {
+    color: inherit !important;
+    text-decoration: none !important;
+  }
+}

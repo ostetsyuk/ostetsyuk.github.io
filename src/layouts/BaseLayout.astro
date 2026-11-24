@@ -1,0 +1,80 @@
+---
+import '../styles/global.css';
+import { loadCV } from '../lib/cv';
+
+const cv = loadCV();
+const pageTitle = `${cv.profile.name.en} — ${cv.profile.title.en}`;
+const pageDesc =
+  'Senior DevOps / Site Reliability Engineer & Infrastructure Team Lead (13+ years). Azure, AKS, Terraform, GitLab CI/CD, OpenTelemetry, HashiCorp Vault, Agentic SRE.';
+
+const personLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: cv.profile.name.en,
+  jobTitle: cv.profile.title.en,
+  url: cv.meta.site_url,
+  email: `mailto:${cv.profile.email}`,
+  sameAs: [cv.profile.linkedin, cv.profile.github],
+  knowsAbout: [
+    'Microsoft Azure',
+    'Kubernetes',
+    'Site Reliability Engineering',
+    'Terraform',
+    'GitLab CI/CD',
+    'OpenTelemetry',
+    'Prometheus',
+    'Grafana',
+    'HashiCorp Vault',
+  ],
+};
+---
+
+<!doctype html>
+<html lang="en" data-lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <script is:inline>
+      try {
+        var s = localStorage.getItem('color-scheme');
+        if (s === 'light' || s === 'dark') {
+          document.querySelector('meta[name="color-scheme"]').content = s;
+        }
+        var l = new URLSearchParams(location.search).get('lang') || localStorage.getItem('cv-lang');
+        if (l === 'ua' || l === 'en') {
+          document.documentElement.dataset.lang = l;
+          document.documentElement.lang = l === 'ua' ? 'uk' : 'en';
+        }
+      } catch (e) {}
+    </script>
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDesc} />
+    <link rel="canonical" href={cv.meta.site_url} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate" type="text/plain" title="LLM Profile Summary" href="/llms.txt" />
+    <link rel="alternate" type="application/json" title="JSON Resume" href="/cv.json" />
+
+    <meta property="og:type" content="profile" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDesc} />
+    <meta property="og:url" content={cv.meta.site_url} />
+    <meta property="og:image" content={`${cv.meta.site_url}/og-card.svg`} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDesc} />
+    <meta name="twitter:image" content={`${cv.meta.site_url}/og-card.svg`} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <script type="application/ld+json" set:html={JSON.stringify(personLd)} />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

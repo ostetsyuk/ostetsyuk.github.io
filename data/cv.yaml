@@ -1,0 +1,551 @@
+meta:
+  site_url: https://ostetsyuk.github.io
+  pdf_path: /Oleksiy_Stetsyuk_CV.pdf
+  repo_url: https://github.com/ostetsyuk/ostetsyuk.github.io
+  github_username: stetsyuka
+  updated: "2026-11"
+
+profile:
+  name:
+    en: Oleksiy Stetsyuk
+    ua: Олексій Стецюк
+  title:
+    en: Senior DevOps / Site Reliability Engineer
+    ua: Senior DevOps / Site Reliability Engineer
+  subtitle:
+    en: Infrastructure Team Lead · Azure & AKS · IaC · Observability · Agentic SRE
+    ua: Infrastructure Team Lead · Azure & AKS · IaC · Observability · Agentic SRE
+  location:
+    en: Ukraine — Remote (UTC+2/+3)
+    ua: Україна — Remote (UTC+2/+3)
+  availability:
+    en: Open to Senior / Staff SRE & DevOps leadership discussions
+    ua: Відкритий до пропозицій Senior / Staff SRE & DevOps
+  email: stetsyuk.a@gmail.com
+  linkedin: https://www.linkedin.com/in/stetsyuk/
+  linkedin_label: linkedin.com/in/stetsyuk
+  github: https://github.com/stetsyuka
+  github_label: github.com/stetsyuka
+  summary:
+    en: >-
+      DevOps and Site Reliability Engineer with 13+ years in production infrastructure, currently leading the SRE team.
+      Specialised in Microsoft Azure and hybrid on-premises estates: Kubernetes (AKS), Infrastructure as Code (Terraform,
+      Ansible), GitLab CI/CD pipeline engineering, and observability built on Prometheus, Grafana, Zabbix and
+      OpenTelemetry. Completed a full migration of the company estate off on-premises infrastructure to Azure, and operate
+      a portfolio of 170+ applications and APIs. Track record of replacing manual operations with auditable automation,
+      building self-hosted AI-assisted SRE workflows with HashiCorp Vault and MCP observability, and running incident
+      response and root-cause analysis for high-availability platforms — including a high-frequency trading (HFT) platform
+      and enterprise SaaS. Equally comfortable on Linux and Windows Server, in cloud-native and locally hosted environments.
+    ua: >-
+      DevOps та Site Reliability Engineer із понад 13 роками досвіду в production-інфраструктурі, наразі очолюю SRE-команду.
+      Спеціалізуюсь на Microsoft Azure і гібридних on-premises середовищах: Kubernetes (AKS), Infrastructure as Code
+      (Terraform, Ansible), інженерії пайплайнів GitLab CI/CD та observability на базі Prometheus, Grafana, Zabbix і
+      OpenTelemetry. Завершив повну міграцію інфраструктури компанії з on-premises в Azure та супроводжую портфель зі
+      170+ застосунків і API. Системно замінюю ручні операції аудитованою автоматизацією, розвиваю self-hosted
+      AI-агентські SRE-процеси з HashiCorp Vault і MCP-спостережуваністю, веду incident response та RCA для
+      high-availability платформ — від high-frequency trading (HFT) до enterprise SaaS. Впевнено працюю як із Linux, так і з
+      Windows Server у хмарних і локальних інсталяціях.
+
+impact:
+  - value: "13+"
+    unit:
+      en: years
+      ua: років
+    label:
+      en: Production Infrastructure
+      ua: Production-інфраструктура
+    detail:
+      en: Cloud-native Azure/AWS, hybrid VMware/Proxmox, HFT & enterprise SaaS
+      ua: Azure/AWS, гібридні VMware/Proxmox, HFT та enterprise SaaS
+  - value: "170+"
+    unit:
+      en: services
+      ua: сервісів
+    label:
+      en: Apps & APIs Monitored
+      ua: Застосунків і API під наглядом
+    detail:
+      en: Formalised Jira/Confluence registry, SLI/SLO & burn-rate alerting
+      ua: Єдиний реєстр у Jira/Confluence, SLI/SLO та burn-rate алертинг
+  - value: "67"
+    unit:
+      en: repos
+      ua: проєктів
+    label:
+      en: GitLab CI Monitor
+      ua: GitLab CI Monitor
+    detail:
+      en: Custom AKS platform with Entra ID SSO, BFF sidecar & role-aware actions
+      ua: Внутрішня AKS-платформа з Entra ID SSO, BFF sidecar і рольовим доступом
+  - value: "11"
+    unit:
+      en: waves · OIDC
+      ua: хвиль · OIDC
+    label:
+      en: Zero-Secret Azure Patching
+      ua: Zero-Secret патчинг Azure
+    detail:
+      en: Automated Patch Tuesday cadence + 9-month full on-prem → Azure migration
+      ua: Автоматичний цикл Patch Tuesday + 9-місячна міграція on-prem → Azure
+
+skills:
+  - id: cloud
+    category:
+      en: Cloud & Virtualisation
+      ua: Хмара та віртуалізація
+    items:
+      - Microsoft Azure (AKS, Monitor, Log Analytics, Application Insights, Entra ID / Azure AD, Update Manager, Front Door, App Service, VNets)
+      - AWS (ECS, EC2, RDS, S3, VPC, Route53)
+      - VMware ESXi / vCenter
+      - Proxmox VE & Proxmox Backup Server (PBS)
+    tags: [Azure, AKS, AWS, Proxmox, VMware, Entra ID]
+  - id: containers
+    category:
+      en: Containers & Orchestration
+      ua: Контейнери та оркестрація
+    items:
+      - Kubernetes (K8s)
+      - Docker, Docker Compose, Docker Swarm
+      - Helm
+      - Rancher
+    tags: [Kubernetes, AKS, Docker, Helm, Rancher]
+  - id: cicd
+    category:
+      en: CI/CD & Automation
+      ua: CI/CD та автоматизація
+    items:
+      - GitLab CI/CD (SaaS & on-premises), GitLab Kubernetes Agent
+      - GitHub Actions, Azure DevOps, Jenkins
+      - Terraform, Ansible, GitOps
+      - Kaniko, Azure Container Registry (ACR)
+      - Bash, PowerShell, Python, n8n
+    tags: [GitLab CI/CD, Terraform, Ansible, GitHub Actions, GitOps, Kaniko, Python, n8n]
+  - id: observability
+    category:
+      en: Observability & Monitoring
+      ua: Observability та моніторинг
+    items:
+      - Prometheus, Grafana, VictoriaMetrics
+      - OpenTelemetry (OTel), Zabbix, ELK Stack, Graylog, Site24x7
+      - SLI/SLO & error-budget design, burn-rate alerting
+      - Alert routing, on-call & incident response
+    tags: [Prometheus, Grafana, OpenTelemetry, Zabbix, ELK Stack, VictoriaMetrics]
+  - id: security
+    category:
+      en: Security & Secrets
+      ua: Безпека та секрети
+    items:
+      - HashiCorp Vault (AppRole, SecretRef, automated backups)
+      - OIDC Workload Identity Federation (zero long-lived secrets)
+      - DevSecOps (Trivy, SAST, secret & dependency scanning)
+      - Least-privilege RBAC/IAM, Tailscale Zero-Trust Mesh & ACLs
+    tags: [HashiCorp Vault, OIDC, Trivy, Tailscale, DevSecOps]
+  - id: aiops
+    category:
+      en: AI-Assisted SRE & Agentic Ops (2026)
+      ua: AI-SRE та агентська автоматизація (2026)
+    items:
+      - Self-hosted multi-agent SRE orchestration (OpenClaw)
+      - Model Context Protocol (MCP) integrations (Prometheus, Notion, Vault)
+      - Living SRE Runbooks & approval-first execution guardrails
+      - Automated agent evaluation & tuning harnesses (Propose→Probe→Compose)
+    tags: [MCP, Agentic SRE, OpenClaw, Prometheus]
+  - id: os
+    category:
+      en: Operating Systems
+      ua: Операційні системи
+    items:
+      - Linux (Ubuntu, Debian, CentOS)
+      - Windows Server (IIS, Windows Server Core)
+      - Multi-OS production estates
+    tags: [Linux, Windows Server]
+  - id: networking
+    category:
+      en: Networking & Edge Services
+      ua: Мережі та Edge-сервіси
+    items:
+      - TCP/IP, DNS (BIND9), VLAN, NAT, VPN
+      - Nginx, HAProxy, Cloudflare & Cloudflare Tunnels
+      - Tailscale Mesh VPN, load balancing & high availability
+    tags: [HAProxy, Cloudflare, Nginx, Tailscale]
+  - id: data
+    category:
+      en: Data & Messaging
+      ua: Бази даних та черги
+    items:
+      - PostgreSQL (incl. pgvector), MySQL / MariaDB, MSSQL
+      - MongoDB, DynamoDB, Redis, RabbitMQ, Elasticsearch
+    tags: [PostgreSQL, MySQL, Redis, RabbitMQ]
+  - id: practices
+    category:
+      en: Engineering Practices
+      ua: Інженерні практики
+    items:
+      - Infrastructure as Code (IaC), GitOps, Platform Engineering & Internal Developer Tooling
+      - Disaster Recovery (RPO/RTO) & verified restore drills
+      - Change Management, Root-Cause Analysis (RCA), FinOps cost optimisation
+      - Technical documentation, team leadership & mentoring
+    tags: [IaC, GitOps, FinOps, DR/RPO/RTO]
+
+case_studies:
+  - id: gitlab-ci-monitor
+    number: "01"
+    context:
+      en: B2B Soft · Internal Developer Platform
+      ua: B2B Soft · Внутрішня DevOps-платформа
+    title:
+      en: GitLab CI Monitor — Unified Pipeline Observability
+      ua: GitLab CI Monitor — Єдина observability пайплайнів
+    metric:
+      en: 67 GitLab projects · Zero client-side secrets
+      ua: 67 GitLab-проєктів · Нуль секретів на клієнті
+    summary:
+      en: >-
+        Designed and shipped an internal pipeline-observability platform used across all infrastructure teams: a React
+        SPA on AKS with Entra ID SSO and app-role authorisation, backed by a BFF sidecar that keeps the GitLab service
+        token server-side and mirrors real GitLab project permissions for role-aware retry, rerun and cancel actions.
+      ua: >-
+        Спроєктував і вивів у прод внутрішню платформу спостережуваності пайплайнів для всіх інфраструктурних команд:
+        React SPA в AKS з Entra ID SSO та app-role авторизацією і BFF sidecar, який тримає сервісний токен GitLab
+        виключно на сервері та дзеркалить реальні права проєктів для рольових retry/rerun/cancel.
+    architecture:
+      - "Entra ID SSO"
+      - "AKS · React SPA"
+      - "BFF Sidecar (Token Isolation)"
+      - "GitLab API (67 Projects)"
+    delivery:
+      en: "Delivery: Kaniko → ACR → Trivy + SAST + Secret Scan → Manual Prod Gate → Helm via GitLab K8s Agent (atomic rollout & rollback)."
+      ua: "Доставка: Kaniko → ACR → Trivy + SAST + Secret Scan → ручний prod-gate → Helm через GitLab K8s Agent (atomic rollout & rollback)."
+    tags: [Azure, AKS, Kubernetes, Helm, GitLab CI/CD, Kaniko, Trivy, Entra ID]
+
+  - id: azure-patching
+    number: "02"
+    context:
+      en: B2B Soft · Cloud Operations Automation
+      ua: B2B Soft · Автоматизація хмарних операцій
+    title:
+      en: Zero-Secret 11-Wave Azure Update Manager Patching
+      ua: Zero-Secret 11-хвильовий патчинг в Azure Update Manager
+    metric:
+      en: 11 waves · OIDC Federation · Auditable Patch Tuesday
+      ua: 11 хвиль · OIDC-федерація · Аудитований Patch Tuesday
+    summary:
+      en: >-
+        Replaced host-by-host manual patching with a scheduled, auditable Terraform + GitLab CI/CD pipeline using OIDC
+        workload identity federation (no long-lived secrets): tag-based VM auto-enrolment, an 11-wave maintenance matrix,
+        and monthly Patch Tuesday-anchored windows with automated bilingual notifications.
+      ua: >-
+        Замінив ручний патчинг по хостах на плановий аудитований процес через Terraform і GitLab CI/CD з OIDC-федерацією
+        (без довгоживучих секретів): автореєстрація VM за тегами, 11-хвильова матриця вікон обслуговування від Patch
+        Tuesday та автоматичні двомовні сповіщення.
+    architecture:
+      - "GitLab CI/CD (OIDC)"
+      - "Terraform IaC"
+      - "Azure Update Manager"
+      - "11-Wave Tag Matrix + Alerts"
+    delivery:
+      en: "Outcome: Zero static cloud credentials, predictable blast-radius waves, full compliance trail."
+      ua: "Результат: жодних статичних ключів, контрольований blast radius по хвилях, повний аудит-трейл."
+    tags: [Azure, Terraform, GitLab CI/CD, OIDC, Windows Server, Linux]
+
+  - id: otel-observability
+    number: "03"
+    context:
+      en: B2B Soft · Observability Architecture
+      ua: B2B Soft · Архітектура Observability
+    title:
+      en: Vendor-Neutral OpenTelemetry & SLI/SLO Stack
+      ua: Vendor-Neutral OpenTelemetry та SLI/SLO-стек
+    metric:
+      en: 170+ apps & APIs · No ingestion lock-in
+      ua: 170+ сервісів та API · Без vendor lock-in
+    summary:
+      en: >-
+        Designed an OpenTelemetry Collector topology (agent + gateway) to keep production telemetry vendor-neutral and
+        avoid irreversible provider lock-in. Rebuilt Grafana, Prometheus and Zabbix dashboards with Entra ID SSO, cut
+        alert noise via template tuning and exclusion rules, and formalised a single-source-of-truth registry in Jira & Confluence.
+      ua: >-
+        Спроєктував топологію OpenTelemetry Collector (agent + gateway) для вендор-нейтрального збору телеметрії без
+        lock-in на провайдера. Перезібрав стек Grafana, Prometheus і Zabbix з Entra ID SSO, прибрав шум алертів через
+        тюнінг шаблонів і правила виключень та формалізував реєстр 170+ застосунків у Jira і Confluence.
+    architecture:
+      - "170+ Apps & APIs"
+      - "OTel Collector (Agent)"
+      - "OTel Gateway"
+      - "Prometheus / Grafana / Zabbix"
+    delivery:
+      en: "Also authored an internal study guide on OpenTelemetry, VictoriaMetrics, SLI/SLO, error budgets & burn-rate alerting."
+      ua: "Також написав внутрішній посібник із OpenTelemetry, VictoriaMetrics, SLI/SLO, error budgets і burn-rate alerting."
+    tags: [OpenTelemetry, Prometheus, Grafana, Zabbix, VictoriaMetrics, Entra ID]
+
+  - id: agentic-sre-homelab
+    number: "04"
+    context:
+      en: Independent Engineering Lab (2026) · AI-Assisted SRE
+      ua: Незалежна інженерна лабораторія (2026) · AI-SRE
+    title:
+      en: Self-Hosted Multi-Agent SRE Platform & Hybrid Homelab
+      ua: Self-Hosted мультиагентна SRE-платформа та гібридний Homelab
+    metric:
+      en: 13 VMs · 10+ Agents · Vault AppRole · Zero-Trust Tailscale
+      ua: 13 VM · 10+ агентів · Vault AppRole · Zero-Trust Tailscale
+    summary:
+      en: >-
+        Built and operate a production-grade private cloud on Proxmox VE 9.2 (13 VMs, Proxmox Backup Server with
+        encrypted off-site Google Drive replication and verified restore drills) running a self-hosted multi-agent SRE
+        fleet (OpenClaw). Wired live Prometheus MCP diagnostics, Living SRE Runbooks, approval-first execution gates,
+        HashiCorp Vault AppRole secret rendering (root-only, zero plaintext agent access), and an automated weekly
+        evaluation & tuning harness (Propose → Probe → Compose).
+      ua: >-
+        Побудував і підтримую приватну хмару на Proxmox VE 9.2 (13 VM, Proxmox Backup Server із шифрованою off-site
+        реплікацією в Google Drive і перевіреними restore-drill) із self-hosted флотом мультиагентної SRE-автоматизації
+        (OpenClaw). Інтегрував живу діагностику через Prometheus MCP, Living SRE Runbooks, approval-first політики
+        виконання, рендеринг секретів із HashiCorp Vault AppRole (лише root) та щотижневий авто-harness оцінювання
+        якості агентів (Propose → Probe → Compose).
+    architecture:
+      - "Proxmox VE 9.2 + PBS"
+      - "Tailscale Zero-Trust + Vault"
+      - "OpenClaw Multi-Agent SRE"
+      - "Prometheus MCP + Harness²"
+    delivery:
+      en: "Includes Grafana Executive Health dashboards, fail-closed inbound alert webhooks, n8n pipelines & Home Assistant power-resilience automations."
+      ua: "Включає дашборди Grafana Executive Health, fail-closed вебхуки алертів, n8n-пайплайни та Home Assistant автоматизації енергонезалежності."
+    tags: [Proxmox, HashiCorp Vault, Tailscale, Prometheus, Grafana, MCP, Agentic SRE, OpenClaw, n8n, PostgreSQL, Redis]
+
+experience:
+  - id: b2b-lead
+    role:
+      en: Site Reliability Engineer / Infrastructure Team Lead
+      ua: Site Reliability Engineer / Infrastructure Team Lead
+    company: B2B Soft
+    location:
+      en: Remote
+      ua: Remote
+    period:
+      en: Jun 2024 — Present
+      ua: Чер 2024 — Дотепер
+    bullets:
+      en:
+        - Own reliability, observability and cloud operations for business-critical SaaS platforms running on Azure and AKS across production and non-production environments.
+        - Lead the SRE team (2 engineers) — technical direction, work planning, mentoring, hiring input and performance reviews.
+        - Led a nine-month programme that migrated the remaining on-premises estate to Azure, retiring the last locally hosted production workloads and completing the move to fully cloud-hosted infrastructure.
+        - Rebuilt the monitoring and observability stack around Grafana, Prometheus and Zabbix — standardised dashboards, cut alert noise by tuning templates and exclusion rules, introduced SLI/SLO and error-budget thinking into alerting design, and wired Grafana SSO through Entra ID with least-privilege Azure service principals.
+        - Designed and shipped GitLab CI Monitor, an internal pipeline-observability platform now used across all infrastructure teams — a React SPA on AKS with Entra ID SSO and app-role authorisation, backed by a BFF sidecar keeping the GitLab service token server-side and mirroring real GitLab project permissions across 67 GitLab projects.
+        - Built its delivery pipeline end to end — Kaniko image builds to Azure Container Registry, Trivy container scanning plus SAST, secret detection and dependency scanning, and Helm deploys through the GitLab Kubernetes Agent with immutable commit-SHA images, manual production gate, atomic rollout and Helm rollback.
+        - Designed an OpenTelemetry Collector topology (agent + gateway) to keep telemetry vendor-neutral, avoiding an irreversible provider lock-in on production ingestion.
+        - Automated Azure Update Manager patching with Terraform and GitLab CI/CD using OIDC federation (no long-lived secrets) — tag-based VM auto-enrolment, an 11-wave maintenance matrix and monthly Patch Tuesday-anchored windows with automated bilingual notifications.
+        - Formalised the application monitoring process in Jira and Confluence with a single-source-of-truth application registry covering 170+ applications and APIs.
+        - Led incident response and root-cause analysis across the edge (Cloudflare / HAProxy), messaging (RabbitMQ, Redis) and Windows Server layers, converting findings into template, alerting and configuration changes that removed classes of repeat alerts at source.
+        - Designed and tested disaster recovery procedures with defined RPO/RTO targets for business-critical services.
+      ua:
+        - Відповідаю за надійність, observability та хмарні операції критичних SaaS-платформ на Azure і AKS у production та non-production середовищах.
+        - Очолюю SRE-команду (2 інженери) — технічний напрям, планування, менторинг, участь у наймі та performance reviews.
+        - Очолив 9-місячну програму міграції залишків on-premises інфраструктури в Azure, завершивши повний перехід у хмару з виведенням останніх локальних прод-ворклоадів.
+        - Перезібрав стек моніторингу й observability на базі Grafana, Prometheus і Zabbix — стандартизував дашборди, знизив шум алертів тюнінгом шаблонів і правил виключень, впровадив SLI/SLO та error budgets і підключив Grafana SSO через Entra ID з least-privilege service principals.
+        - Спроєктував і запустив GitLab CI Monitor — внутрішню платформу observability пайплайнів для всіх інфраструктурних команд (React SPA на AKS, Entra ID SSO, BFF sidecar для ізоляції сервісного токена, дзеркалення реальних прав доступу по 67 GitLab-проєктах).
+        - Побудував end-to-end delivery pipeline — збірка Kaniko в ACR, сканування Trivy + SAST + secret/dependency detection і деплой Helm через GitLab Kubernetes Agent (immutable commit-SHA образи, ручний prod-gate, atomic rollout та rollback).
+        - Спроєктував вендор-нейтральну топологію OpenTelemetry Collector (agent + gateway), уникнувши lock-in на провайдера телеметрії.
+        - Автоматизував патчинг в Azure Update Manager через Terraform і GitLab CI/CD з OIDC-федерацією (без статичних секретів) — автореєстрація VM за тегами, 11-хвильова матриця від Patch Tuesday та двомовні сповіщення.
+        - Формалізував процес моніторингу застосунків у Jira та Confluence з єдиним реєстром на 170+ сервісів і API.
+        - Вів incident response та RCA на рівнях edge (Cloudflare / HAProxy), черг (RabbitMQ, Redis) і Windows Server, усуваючи цілі класи повторних алертів у першопричині.
+        - Розробив і протестував процедури disaster recovery із визначеними RPO/RTO для критичних сервісів.
+    tech:
+      - Azure (AKS, Monitor, Log Analytics, Entra ID, Update Manager, ACR)
+      - Kubernetes
+      - Helm
+      - Terraform
+      - Ansible
+      - GitLab CI/CD
+      - GitLab Kubernetes Agent
+      - Kaniko
+      - Trivy
+      - Docker
+      - Prometheus
+      - Grafana
+      - Zabbix
+      - ELK Stack
+      - OpenTelemetry
+      - HAProxy
+      - Cloudflare
+      - Site24x7
+      - RabbitMQ
+      - Redis
+      - Bash
+      - PowerShell
+      - Python
+    tags: [Azure, AKS, Kubernetes, Helm, Terraform, Ansible, GitLab CI/CD, Kaniko, Trivy, Docker, Prometheus, Grafana, Zabbix, ELK Stack, OpenTelemetry, HAProxy, Cloudflare, RabbitMQ, Redis, Python, Entra ID, OIDC, DevSecOps, DR/RPO/RTO, Linux, Windows Server]
+
+  - id: b2b-cloud
+    role:
+      en: Cloud Infrastructure Engineer (Azure)
+      ua: Cloud Infrastructure Engineer (Azure)
+    company: B2B Soft
+    location:
+      en: Remote
+      ua: Remote
+    period:
+      en: Jan 2020 — May 2024
+      ua: Січ 2020 — Тра 2024
+    bullets:
+      en:
+        - Led the migration of on-premises workloads to Azure, designing the landing-zone architecture (Azure Resource Manager, VNets, hybrid connectivity) and rebuilding delivery through Azure DevOps and GitLab CI/CD pipelines.
+        - Provisioned and operated AKS clusters; packaged and deployed microservices at scale using Helm charts.
+        - Codified the environment in Terraform and Ansible, moving provisioning from manual builds to reviewable, repeatable and auditable code.
+        - Reduced Azure spend through right-sizing, reserved-instance coverage and continuous cost monitoring.
+        - Defined the team-wide Azure resource naming and tagging convention still used as the standard for new infrastructure.
+        - Operated hybrid VMware / vCenter clusters alongside Azure for Windows Server Core and Ubuntu workloads.
+        - Improved SLA compliance using Azure Monitor, Log Analytics and Application Insights for proactive detection.
+      ua:
+        - Керував міграцією on-premises навантажень в Azure — спроєктував landing-zone архітектуру (ARM, VNets, гібридна зв'язність) і перебудував доставку через Azure DevOps та GitLab CI/CD.
+        - Розгортав і супроводжував кластери AKS; пакував і деплоїв мікросервіси у масштабі через Helm-чарти.
+        - Перевів інфраструктуру в код (Terraform, Ansible), замінивши ручні збірки на рев'юваний, відтворюваний та аудитований процес.
+        - Оптимізував витрати в Azure за рахунок right-sizing, Reserved Instances і безперервного FinOps-моніторингу.
+        - Розробив командний стандарт іменування та тегування Azure-ресурсів, який досі використовується для всієї нової інфраструктури.
+        - Адміністрував гібридні кластери VMware / vCenter поруч з Azure для Windows Server Core та Ubuntu.
+        - Підвищив дотримання SLA завдяки проактивному виявленню інцидентів через Azure Monitor, Log Analytics та Application Insights.
+    tech:
+      - Azure (AKS, Front Door, Storage, VNets, Azure AD, App Service, Application Insights, Monitor)
+      - Terraform
+      - Ansible
+      - Jenkins
+      - GitLab CI/CD
+      - Azure DevOps
+      - Docker
+      - Helm
+      - VMware ESXi
+      - Rancher
+      - Graylog
+      - HAProxy
+      - Windows Server Core
+      - Ubuntu
+    tags: [Azure, AKS, Terraform, Ansible, GitLab CI/CD, Docker, Helm, VMware, Rancher, HAProxy, FinOps, IaC, Linux, Windows Server, Entra ID]
+
+  - id: sportech
+    role:
+      en: DevOps Engineer
+      ua: DevOps Engineer
+    company: Sportech
+    location:
+      en: Kyiv, Ukraine
+      ua: Київ, Україна
+    period:
+      en: "2019 — 2020"
+      ua: "2019 — 2020"
+    bullets:
+      en:
+        - Planned and provisioned AWS infrastructure against defined budget and scalability constraints.
+        - Migrated 25+ microservices (210–230 containers) to AWS ECS, consolidating a fragmented deployment landscape onto one platform.
+        - Deployed a Prometheus + Grafana monitoring stack, providing end-to-end visibility across all services for the first time.
+        - Rewrote the entire infrastructure codebase in Terraform, enabling version-controlled, reproducible environments.
+      ua:
+        - Спроєктував і розгорнув інфраструктуру в AWS в межах заданого бюджету та вимог до масштабування.
+        - Мігрував 25+ мікросервісів (210–230 контейнерів) в AWS ECS, об'єднавши фрагментований деплой на єдиній платформі.
+        - Розгорнув стек Prometheus + Grafana, вперше забезпечивши наскрізну видимість усіх сервісів.
+        - Переписав усю інфраструктуру в Terraform, забезпечивши версіоновані та відтворювані середовища.
+    tech:
+      - AWS (ECS, EC2, Route53, ELB/ALB, VPC, RDS, S3, DynamoDB)
+      - Terraform
+      - Jenkins
+      - Docker
+      - Docker Compose
+      - Prometheus
+      - Grafana
+      - MongoDB
+      - Graylog
+      - Elasticsearch
+      - Rundeck
+      - Ansible
+      - Pritunl
+    tags: [AWS, Terraform, Docker, Prometheus, Grafana, Ansible, IaC, Linux]
+
+  - id: hft
+    role:
+      en: DevOps Engineer
+      ua: DevOps Engineer
+    company:
+      en: High-Frequency Trading (HFT) Platform
+      ua: High-Frequency Trading (HFT) Platform
+    location:
+      en: Kyiv, Ukraine
+      ua: Київ, Україна
+    period:
+      en: "2015 — 2019"
+      ua: "2015 — 2019"
+    bullets:
+      en:
+        - Ran 24/7 mission-critical production environments with zero-downtime release processes for a high-frequency trading platform where seconds of downtime carried direct financial cost.
+        - Managed multi-OS estates (Ubuntu, CentOS, Windows Server) across development, staging and production.
+        - Administered MySQL databases — replication, backup/restore and performance tuning.
+        - Operated Zabbix with custom alerting rules and maintained the ELK Stack for centralised logging.
+        - Authored and maintained architecture documentation, runbooks and operational procedures used by the on-call team.
+      ua:
+        - Підтримував 24/7 критичні production-середовища із zero-downtime релізами для HFT-платформи, де секунди простою мали пряму фінансову ціну.
+        - Керував мульти-ОС середовищами (Ubuntu, CentOS, Windows Server) у dev, staging та production.
+        - Адміністрував MySQL — реплікація, резервне копіювання/відновлення та тюнінг продуктивності.
+        - Налаштовував Zabbix із кастомними правилами алертингу та супроводжував ELK Stack для централізованого логування.
+        - Створював і підтримував архітектурну документацію, ранбуки та операційні процедури для on-call команди.
+    tech:
+      - Linux (CentOS, Ubuntu)
+      - Windows Server
+      - Docker Swarm
+      - GitLab CI/CD
+      - Proxmox
+      - Zabbix
+      - ELK Stack
+      - Rundeck
+      - BIND9
+      - MySQL
+    tags: [Linux, Windows Server, Docker, GitLab CI/CD, Proxmox, Zabbix, ELK Stack, MySQL]
+
+  - id: sysadmin
+    role:
+      en: System Administrator
+      ua: System Administrator
+    company:
+      en: Hosting provider; TNT Transport & Logistics; Ministry of Revenue and Duties
+      ua: Хостинг-провайдер; TNT Transport & Logistics; Міністерство доходів і зборів
+    location:
+      en: Kyiv, Ukraine
+      ua: Київ, Україна
+    period:
+      en: "2013 — 2015"
+      ua: "2013 — 2015"
+    bullets:
+      en:
+        - Administered Active Directory, Windows and Linux servers, virtualisation platforms, VPN and backup systems.
+        - Delivered L2/L3 support for internal users and external clients, focused on system stability, incident resolution and access management.
+      ua:
+        - Адміністрував Active Directory, Windows та Linux сервери, платформи віртуалізації, VPN і системи резервного копіювання.
+        - Забезпечував L2/L3 підтримку внутрішніх і зовнішніх користувачів із фокусом на стабільність систем, розв'язання інцидентів та керування доступами.
+    tech:
+      - Active Directory
+      - Windows Server
+      - Linux
+      - VPN
+      - Virtualisation
+      - Backups
+    tags: [Linux, Windows Server]
+
+education:
+  - degree:
+      en: MSc, Economic Cybernetics
+      ua: Магістр, Економічна кібернетика
+    institution:
+      en: Kyiv National University of Trade and Economics (KNUTE)
+      ua: Київський національний торговельно-економічний університет (КНТЕУ)
+    year: "2010"
+  - degree:
+      en: Networking and System Administration
+      ua: Мережі та системне адміністрування
+    institution:
+      en: Computer Academy "STEP", Kyiv
+      ua: Комп'ютерна Академія «ШАГ», Київ
+    year: "2006"
+
+additional:
+  languages:
+    en: "Ukrainian — native; English — Intermediate (B1–B2), working proficiency in written and technical communication"
+    ua: "Українська — рідна; Англійська — Intermediate (B1–B2), впевнена письмова й технічна комунікація"
+  writing:
+    en: "Author of an internal study guide on OpenTelemetry, VictoriaMetrics and observability practice (SLI/SLO, error budgets, burn-rate alerting, production-readiness checklists)"
+    ua: "Автор внутрішнього навчального посібника з OpenTelemetry, VictoriaMetrics та практик observability (SLI/SLO, error budgets, burn-rate alerting, production-readiness checklists)"

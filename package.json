@@ -1,0 +1,26 @@
+{
+  "name": "ostetsyuk-cv",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "pdf:prep": "node scripts/generate-rendercv.mjs",
+    "pdf:build": "node scripts/generate-rendercv.mjs && uvx --from \"rendercv[full]\" rendercv render pdf/rendercv_en.yaml --pdf-path ../public/Oleksiy_Stetsyuk_CV.pdf --dont-generate-markdown --dont-generate-html --dont-generate-png",
+    "check": "node scripts/validate-cv.mjs && astro check"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.1.11",
+    "astro": "^5.10.0",
+    "js-yaml": "^4.1.0",
+    "tailwindcss": "^4.1.11"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^26.6.6",
+    "typescript": "^5.8.3"
+  }
+}

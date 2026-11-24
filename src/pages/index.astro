@@ -1,0 +1,902 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { companyText, loadCV } from '../lib/cv';
+
+const cv = loadCV();
+const buildDate = new Date().toISOString().slice(0, 10);
+const buildSha = (process.env.GITHUB_SHA || 'local').slice(0, 7);
+
+// Deduplicated interactive filter chips (curated high-signal tags)
+const filterChips = [
+  'Azure',
+  'AKS',
+  'Terraform',
+  'GitLab CI/CD',
+  'OpenTelemetry',
+  'Prometheus',
+  'Grafana',
+  'HashiCorp Vault',
+  'OIDC',
+  'AWS',
+  'Proxmox',
+  'Agentic SRE',
+  'MCP',
+  'Helm',
+  'Ansible',
+  'Zabbix',
+  'Linux',
+  'Windows Server',
+];
+
+const cliPayload = {
+  name: cv.profile.name,
+  title: cv.profile.title,
+  location: cv.profile.location,
+  email: cv.profile.email,
+  linkedin: cv.profile.linkedin,
+  github: cv.profile.github,
+  site: cv.meta.site_url,
+  pdf: cv.meta.pdf_path,
+  impact: cv.impact.map((m) => ({
+    value: m.value,
+    unit: m.unit,
+    label: m.label,
+    detail: m.detail,
+  })),
+  skills: cv.skills.map((s) => ({
+    category: s.category,
+    items: s.items,
+  })),
+  cases: cv.case_studies.map((c) => ({
+    number: c.number,
+    title: c.title,
+    metric: c.metric,
+    flow: c.architecture.join(' -> '),
+  })),
+  experience: cv.experience.map((e) => ({
+    role: e.role,
+    company: { en: companyText(e.company, 'en'), ua: companyText(e.company, 'ua') },
+    period: e.period,
+  })),
+};
+---
+
+<BaseLayout>
+  <!-- Sticky Telemetry Top Bar -->
+  <header
+    class="no-print sticky top-0 z-30 border-b backdrop-blur-md"
+    style="border-color: var(--border-hairline); background-color: color-mix(in srgb, var(--bg-canvas) 86%, transparent);"
+  >
+    <div class="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-2 px-4 py-2.5 sm:px-6">
+      <div class="flex items-center gap-2.5 font-mono-tech text-xs" style="color: var(--ink-secondary);">
+        <span class="relative flex h-2.5 w-2.5" aria-hidden="true">
+          <span
+            class="absolute inline-flex h-full w-full animate-ping rounded-full opacity-60"
+            style="background-color: var(--accent);"
+          ></span>
+          <span class="relative inline-flex h-2.5 w-2.5 rounded-full" style="background-color: var(--accent);"></span>
+        </span>
+        <span data-i18n="en">ostetsyuk.github.io · Remote (UTC+2/+3)</span>
+        <span data-i18n="ua">ostetsyuk.github.io · Remote (UTC+2/+3)</span>
+      </div>
+
+      <div class="flex items-center gap-1.5 sm:gap-2">
+        <!-- EN / UA Switcher -->
+        <div
+          class="inline-flex rounded-lg border p-0.5 font-mono-tech text-xs"
+          style="border-color: var(--border-hairline); background-color: var(--bg-surface);"
+          role="group"
+          aria-label="Language"
+        >
+          <button
+            type="button"
+            data-lang-btn="en"
+            class="rounded-md px-2 py-1 font-medium transition-colors"
+            aria-pressed="true"
+          >
+            EN
+          </button>
+          <button
+            type="button"
+            data-lang-btn="ua"
+            class="rounded-md px-2 py-1 font-medium transition-colors"
+            aria-pressed="false"
+          >
+            UA
+          </button>
+        </div>
+
+        <!-- Theme Toggle (modern-web-guidance dark-mode-toggle) -->
+        <button
+          type="button"
+          id="themeToggle"
+          class="inline-flex h-8 w-8 items-center justify-center rounded-lg border transition-colors hover:opacity-85"
+          style="border-color: var(--border-hairline); background-color: var(--bg-surface); color: var(--ink-secondary);"
+        >
+          <span class="theme-icon-to-dark items-center justify-center">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+            </svg>
+            <span class="sr-only">Switch to dark theme</span>
+          </span>
+          <span class="theme-icon-to-light items-center justify-center">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <circle cx="12" cy="12" r="5" />
+              <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+            </svg>
+            <span class="sr-only">Switch to light theme</span>
+          </span>
+        </button>
+
+        <!-- CLI Terminal Trigger -->
+        <button
+          type="button"
+          id="openCliBtn"
+          class="inline-flex h-8 items-center gap-1.5 rounded-lg border px-2.5 font-mono-tech text-xs font-medium transition-colors hover:opacity-90"
+          style="border-color: var(--border-hairline); background-color: var(--bg-surface); color: var(--ink-primary);"
+          title="Interactive CLI Mode (⌘K / Ctrl+K)"
+        >
+          <span style="color: var(--accent);">&gt;_</span>
+          <span>CLI</span>
+          <kbd
+            class="hidden rounded border px-1 text-[10px] sm:inline-block"
+            style="border-color: var(--border-hairline); color: var(--ink-muted);"
+          >⌘K</kbd>
+        </button>
+
+        <!-- Primary CTA: ATS PDF -->
+        <a
+          href={cv.meta.pdf_path}
+          download="Oleksiy_Stetsyuk_CV.pdf"
+          class="inline-flex h-8 items-center gap-1.5 rounded-lg px-3 font-mono-tech text-xs font-semibold text-white transition-opacity hover:opacity-90"
+          style="background-color: var(--accent); color: light-dark(#ffffff, #071314);"
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="7 10 12 15 17 10" />
+            <line x1="12" y1="15" x2="12" y2="3" />
+          </svg>
+          <span data-i18n="en">ATS PDF</span>
+          <span data-i18n="ua">ATS PDF</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-5xl px-4 pb-20 pt-10 sm:px-6 sm:pt-14">
+    <!-- Hero -->
+    <section class="reveal mb-10">
+      <div class="mb-3 inline-flex items-center gap-2 rounded-full border px-3 py-1 font-mono-tech text-xs"
+        style="border-color: var(--accent-border); background-color: var(--accent-soft); color: var(--accent);">
+        <span data-i18n="en">{cv.profile.availability.en}</span>
+        <span data-i18n="ua">{cv.profile.availability.ua}</span>
+      </div>
+
+      <h1 class="font-serif-editorial text-4xl font-bold tracking-tight sm:text-5xl" style="color: var(--ink-primary);">
+        <span data-i18n="en">{cv.profile.name.en}</span>
+        <span data-i18n="ua">{cv.profile.name.ua}</span>
+      </h1>
+
+      <p class="mt-2 text-lg font-medium sm:text-xl" style="color: var(--ink-secondary);">
+        <span data-i18n="en">{cv.profile.title.en}</span>
+        <span data-i18n="ua">{cv.profile.title.ua}</span>
+      </p>
+      <p class="mt-1 font-mono-tech text-xs sm:text-sm" style="color: var(--ink-muted);">
+        <span data-i18n="en">{cv.profile.subtitle.en}</span>
+        <span data-i18n="ua">{cv.profile.subtitle.ua}</span>
+      </p>
+
+      <!-- Contact Strip (No raw phone number on public site) -->
+      <div class="mt-5 flex flex-wrap items-center gap-2 font-mono-tech text-xs">
+        <button
+          type="button"
+          id="copyEmailBtn"
+          data-email={cv.profile.email}
+          class="surface-card inline-flex items-center gap-2 rounded-lg px-3 py-1.5 transition-colors hover:opacity-90"
+          style="color: var(--ink-primary);"
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <rect x="2" y="4" width="20" height="16" rx="2" />
+            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+          </svg>
+          <span>{cv.profile.email}</span>
+          <span id="copyFeedback" class="rounded px-1.5 py-0.5 text-[10px]" style="background-color: var(--bg-subtle); color: var(--accent);">
+            <span data-i18n="en">copy</span>
+            <span data-i18n="ua">копіювати</span>
+          </span>
+        </button>
+
+        <a
+          href={cv.profile.linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="surface-card inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 transition-colors hover:opacity-85"
+          style="color: var(--ink-secondary);"
+        >
+          <span>LinkedIn</span>
+          <span aria-hidden="true">↗</span>
+        </a>
+
+        <a
+          href={cv.profile.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="surface-card inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 transition-colors hover:opacity-85"
+          style="color: var(--ink-secondary);"
+        >
+          <span>GitHub</span>
+          <span aria-hidden="true">↗</span>
+        </a>
+
+        <a
+          href="/llms.txt"
+          class="no-print surface-card inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 transition-colors hover:opacity-85"
+          style="color: var(--ink-muted);"
+          title="Machine-readable Markdown summary for AI recruiters and LLM agents"
+        >
+          <span>/llms.txt</span>
+        </a>
+
+        <a
+          href="/cv.json"
+          class="no-print surface-card inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 transition-colors hover:opacity-85"
+          style="color: var(--ink-muted);"
+          title="JSON Resume Schema"
+        >
+          <span>/cv.json</span>
+        </a>
+      </div>
+
+      <!-- Professional Summary -->
+      <div class="surface-card mt-6 rounded-xl p-5 sm:p-6">
+        <p class="text-sm leading-relaxed sm:text-[15px]" style="color: var(--ink-secondary);">
+          <span data-i18n="en">{cv.profile.summary.en}</span>
+          <span data-i18n="ua">{cv.profile.summary.ua}</span>
+        </p>
+      </div>
+    </section>
+
+    <!-- Impact Bento Strip -->
+    <section class="reveal reveal-delay-1 mb-12" aria-labelledby="impactHeading">
+      <h2 id="impactHeading" class="sr-only">Key Engineering Impact</h2>
+      <div class="grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-4">
+        {cv.impact.map((item) => (
+          <article class="surface-card flex flex-col justify-between rounded-xl p-4 sm:p-5">
+            <div>
+              <div class="flex items-baseline gap-1.5">
+                <span class="font-mono-tech text-3xl font-semibold tracking-tight" style="color: var(--accent);">
+                  {item.value}
+                </span>
+                <span class="font-mono-tech text-xs uppercase tracking-wider" style="color: var(--ink-muted);">
+                  <span data-i18n="en">{item.unit.en}</span>
+                  <span data-i18n="ua">{item.unit.ua}</span>
+                </span>
+              </div>
+              <h3 class="mt-2 text-sm font-semibold" style="color: var(--ink-primary);">
+                <span data-i18n="en">{item.label.en}</span>
+                <span data-i18n="ua">{item.label.ua}</span>
+              </h3>
+            </div>
+            <p class="mt-2 text-xs leading-relaxed" style="color: var(--ink-muted);">
+              <span data-i18n="en">{item.detail.en}</span>
+              <span data-i18n="ua">{item.detail.ua}</span>
+            </p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <!-- Interactive Skill Filter Bar + Skills Matrix -->
+    <section class="reveal reveal-delay-2 mb-12" aria-labelledby="skillsHeading">
+      <div class="mb-4 flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <p class="font-mono-tech text-xs uppercase tracking-widest" style="color: var(--accent);">01 // CAPABILITIES</p>
+          <h2 id="skillsHeading" class="font-serif-editorial mt-0.5 text-2xl font-bold" style="color: var(--ink-primary);">
+            <span data-i18n="en">Core Skills & Interactive Stack Filter</span>
+            <span data-i18n="ua">Ключові навички та фільтр стеку</span>
+          </h2>
+        </div>
+
+        <div id="filterStatus" class="no-print hidden items-center gap-2 font-mono-tech text-xs">
+          <span id="filterStatusText" style="color: var(--accent);"></span>
+          <button
+            type="button"
+            id="clearFilterBtn"
+            class="rounded-md border px-2 py-1 text-xs transition-colors hover:opacity-80"
+            style="border-color: var(--border-strong); color: var(--ink-primary);"
+          >
+            <span data-i18n="en">Reset</span>
+            <span data-i18n="ua">Скинути</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Filter Chips -->
+      <div class="no-print surface-card mb-4 rounded-xl p-3.5">
+        <div class="mb-2 font-mono-tech text-[11px]" style="color: var(--ink-muted);">
+          <span data-i18n="en">Click a technology to highlight matching case studies &amp; roles below:</span>
+          <span data-i18n="ua">Натисни на технологію, щоб підсвітити релевантні кейси й досвід нижче:</span>
+        </div>
+        <div class="flex flex-wrap gap-1.5" role="group" aria-label="Filter experience by technology">
+          {filterChips.map((chip) => (
+            <button type="button" class="skill-chip" data-filter-tag={chip} aria-pressed="false">
+              {chip}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <!-- Full Structured Skills Grid -->
+      <div class="grid grid-cols-1 gap-3 md:grid-cols-2">
+        {cv.skills.map((group) => (
+          <div class="surface-card rounded-xl p-4">
+            <h3 class="font-mono-tech text-xs font-semibold uppercase tracking-wider" style="color: var(--accent);">
+              <span data-i18n="en">{group.category.en}</span>
+              <span data-i18n="ua">{group.category.ua}</span>
+            </h3>
+            <p class="mt-1.5 text-xs leading-relaxed sm:text-[13px]" style="color: var(--ink-secondary);">
+              {group.items.join(' · ')}
+            </p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Featured Architecture Case Studies -->
+    <section class="reveal reveal-delay-3 mb-12" aria-labelledby="casesHeading">
+      <div class="mb-4">
+        <p class="font-mono-tech text-xs uppercase tracking-widest" style="color: var(--accent);">02 // ARCHITECTURE PROOF-OF-WORK</p>
+        <h2 id="casesHeading" class="font-serif-editorial mt-0.5 text-2xl font-bold" style="color: var(--ink-primary);">
+          <span data-i18n="en">Featured Systems &amp; Engineering Highlights</span>
+          <span data-i18n="ua">Ключові архітектурні системи та проєкти</span>
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+        {cv.case_studies.map((cs) => (
+          <article
+            class="surface-card filterable-card flex flex-col justify-between rounded-xl p-5"
+            data-tags={cs.tags.join('|')}
+          >
+            <div>
+              <div class="flex items-center justify-between gap-2 font-mono-tech text-[11px]" style="color: var(--ink-muted);">
+                <span>
+                  <span data-i18n="en">{cs.context.en}</span>
+                  <span data-i18n="ua">{cs.context.ua}</span>
+                </span>
+                <span class="font-semibold" style="color: var(--accent);">#{cs.number}</span>
+              </div>
+
+              <h3 class="mt-2 font-serif-editorial text-lg font-bold leading-snug" style="color: var(--ink-primary);">
+                <span data-i18n="en">{cs.title.en}</span>
+                <span data-i18n="ua">{cs.title.ua}</span>
+              </h3>
+
+              <div
+                class="mt-2 inline-block rounded-md px-2 py-0.5 font-mono-tech text-[11px] font-medium"
+                style="background-color: var(--signal-soft); color: var(--signal);"
+              >
+                <span data-i18n="en">{cs.metric.en}</span>
+                <span data-i18n="ua">{cs.metric.ua}</span>
+              </div>
+
+              <p class="mt-3 text-xs leading-relaxed sm:text-[13.5px]" style="color: var(--ink-secondary);">
+                <span data-i18n="en">{cs.summary.en}</span>
+                <span data-i18n="ua">{cs.summary.ua}</span>
+              </p>
+
+              <!-- Architecture Topology Flow -->
+              <div
+                class="mt-4 rounded-lg border p-2.5 font-mono-tech text-[11px]"
+                style="border-color: var(--border-hairline); background-color: var(--bg-subtle);"
+              >
+                <div class="flex flex-wrap items-center gap-1.5">
+                  {cs.architecture.map((node, idx) => (
+                    <>
+                      <span
+                        class="rounded border px-2 py-0.5"
+                        style="border-color: var(--border-strong); background-color: var(--bg-surface); color: var(--ink-primary);"
+                      >
+                        {node}
+                      </span>
+                      {idx < cs.architecture.length - 1 && (
+                        <span aria-hidden="true" style="color: var(--accent);">→</span>
+                      )}
+                    </>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-3.5 border-t pt-3" style="border-color: var(--border-hairline);">
+              <p class="text-xs leading-relaxed" style="color: var(--ink-muted);">
+                <span data-i18n="en">{cs.delivery.en}</span>
+                <span data-i18n="ua">{cs.delivery.ua}</span>
+              </p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <!-- Professional Experience Timeline -->
+    <section class="mb-12" aria-labelledby="experienceHeading">
+      <div class="mb-5">
+        <p class="font-mono-tech text-xs uppercase tracking-widest" style="color: var(--accent);">03 // CAREER TIMELINE</p>
+        <h2 id="experienceHeading" class="font-serif-editorial mt-0.5 text-2xl font-bold" style="color: var(--ink-primary);">
+          <span data-i18n="en">Professional Experience</span>
+          <span data-i18n="ua">Професійний досвід</span>
+        </h2>
+      </div>
+
+      <div class="space-y-4">
+        {cv.experience.map((job) => (
+          <article class="surface-card filterable-card rounded-xl p-5 sm:p-6" data-tags={job.tags.join('|')}>
+            <div class="flex flex-wrap items-baseline justify-between gap-2 border-b pb-3" style="border-color: var(--border-hairline);">
+              <div>
+                <h3 class="font-serif-editorial text-lg font-bold sm:text-xl" style="color: var(--ink-primary);">
+                  <span data-i18n="en">{job.role.en}</span>
+                  <span data-i18n="ua">{job.role.ua}</span>
+                </h3>
+                <p class="mt-0.5 text-sm font-medium" style="color: var(--accent);">
+                  <span data-i18n="en">{companyText(job.company, 'en')} · {job.location.en}</span>
+                  <span data-i18n="ua">{companyText(job.company, 'ua')} · {job.location.ua}</span>
+                </p>
+              </div>
+              <span
+                class="rounded-md border px-2.5 py-1 font-mono-tech text-xs"
+                style="border-color: var(--border-hairline); background-color: var(--bg-subtle); color: var(--ink-secondary);"
+              >
+                <span data-i18n="en">{job.period.en}</span>
+                <span data-i18n="ua">{job.period.ua}</span>
+              </span>
+            </div>
+
+            <ul class="mt-4 space-y-2 text-sm leading-relaxed" style="color: var(--ink-secondary);" data-i18n="en">
+              {job.bullets.en.map((b) => (
+                <li class="flex gap-2.5">
+                  <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full" style="background-color: var(--accent);" aria-hidden="true"></span>
+                  <span>{b}</span>
+                </li>
+              ))}
+            </ul>
+
+            <ul class="mt-4 space-y-2 text-sm leading-relaxed" style="color: var(--ink-secondary);" data-i18n="ua">
+              {job.bullets.ua.map((b) => (
+                <li class="flex gap-2.5">
+                  <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full" style="background-color: var(--accent);" aria-hidden="true"></span>
+                  <span>{b}</span>
+                </li>
+              ))}
+            </ul>
+
+            <div class="mt-4 flex flex-wrap gap-1.5 border-t pt-3" style="border-color: var(--border-hairline);">
+              {job.tech.map((t) => (
+                <span
+                  class="rounded px-2 py-0.5 font-mono-tech text-[11px]"
+                  style="background-color: var(--bg-subtle); color: var(--ink-muted);"
+                >
+                  {t}
+                </span>
+              ))}
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <!-- Education & Additional -->
+    <section class="mb-12 grid grid-cols-1 gap-4 md:grid-cols-2" aria-labelledby="educationHeading">
+      <div class="surface-card rounded-xl p-5">
+        <p class="font-mono-tech text-xs uppercase tracking-widest" style="color: var(--accent);">04 // EDUCATION</p>
+        <h2 id="educationHeading" class="font-serif-editorial mt-0.5 text-xl font-bold" style="color: var(--ink-primary);">
+          <span data-i18n="en">Education</span>
+          <span data-i18n="ua">Освіта</span>
+        </h2>
+        <div class="mt-4 space-y-3">
+          {cv.education.map((ed) => (
+            <div class="flex items-start justify-between gap-3 border-b pb-3 last:border-b-0 last:pb-0" style="border-color: var(--border-hairline);">
+              <div>
+                <h3 class="text-sm font-semibold" style="color: var(--ink-primary);">
+                  <span data-i18n="en">{ed.degree.en}</span>
+                  <span data-i18n="ua">{ed.degree.ua}</span>
+                </h3>
+                <p class="mt-0.5 text-xs" style="color: var(--ink-secondary);">
+                  <span data-i18n="en">{ed.institution.en}</span>
+                  <span data-i18n="ua">{ed.institution.ua}</span>
+                </p>
+              </div>
+              <span class="font-mono-tech text-xs" style="color: var(--ink-muted);">{ed.year}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="surface-card rounded-xl p-5">
+        <p class="font-mono-tech text-xs uppercase tracking-widest" style="color: var(--accent);">05 // ADDITIONAL</p>
+        <h2 class="font-serif-editorial mt-0.5 text-xl font-bold" style="color: var(--ink-primary);">
+          <span data-i18n="en">Languages &amp; Technical Writing</span>
+          <span data-i18n="ua">Мови та технічні публікації</span>
+        </h2>
+        <div class="mt-4 space-y-3 text-sm leading-relaxed" style="color: var(--ink-secondary);">
+          <div>
+            <div class="font-mono-tech text-xs font-semibold uppercase" style="color: var(--ink-muted);">
+              <span data-i18n="en">Languages</span>
+              <span data-i18n="ua">Мови</span>
+            </div>
+            <p class="mt-1 text-xs sm:text-sm">
+              <span data-i18n="en">{cv.additional.languages.en}</span>
+              <span data-i18n="ua">{cv.additional.languages.ua}</span>
+            </p>
+          </div>
+          <div class="border-t pt-3" style="border-color: var(--border-hairline);">
+            <div class="font-mono-tech text-xs font-semibold uppercase" style="color: var(--ink-muted);">
+              <span data-i18n="en">Technical Writing</span>
+              <span data-i18n="ua">Технічні матеріали</span>
+            </div>
+            <p class="mt-1 text-xs sm:text-sm">
+              <span data-i18n="en">{cv.additional.writing.en}</span>
+              <span data-i18n="ua">{cv.additional.writing.ua}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Telemetry Footer -->
+    <footer class="border-t pt-6 font-mono-tech text-xs" style="border-color: var(--border-hairline); color: var(--ink-muted);">
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          CV-as-Code · Built with Astro + Tailwind + RenderCV/Typst · rev <span style="color: var(--ink-secondary);">{buildSha}</span> ({buildDate})
+        </div>
+        <div class="no-print flex flex-wrap items-center gap-3">
+          <a href={cv.meta.pdf_path} class="hover:underline" style="color: var(--accent);">Oleksiy_Stetsyuk_CV.pdf</a>
+          <a href="/llms.txt" class="hover:underline">/llms.txt</a>
+          <a href="/cv.json" class="hover:underline">/cv.json</a>
+          <a href={cv.meta.repo_url} target="_blank" rel="noopener noreferrer" class="hover:underline">Source ↗</a>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Interactive CLI / Command Modal (<dialog closedby="any"> per modern-web-guidance) -->
+  <dialog id="cliDialog" class="cli-modal no-print" closedby="any" aria-labelledby="cliTitle">
+    <div class="flex items-center justify-between border-b border-[#223040] bg-[#101720] px-4 py-2.5 font-mono-tech text-xs">
+      <div class="flex items-center gap-2">
+        <span class="h-2.5 w-2.5 rounded-full bg-[#ef4444]"></span>
+        <span class="h-2.5 w-2.5 rounded-full bg-[#f59e0b]"></span>
+        <span class="h-2.5 w-2.5 rounded-full bg-[#10b981]"></span>
+        <span id="cliTitle" class="ml-2 text-[#9bb0c4]">ostetsyuk@sre-cv:~$</span>
+      </div>
+      <form method="dialog">
+        <button
+          type="submit"
+          class="rounded border border-[#2c3c4f] px-2 py-0.5 text-[11px] text-[#9bb0c4] hover:border-[#2dd4bf] hover:text-white"
+        >
+          ESC / Close
+        </button>
+      </form>
+    </div>
+
+    <!-- Quick command chips -->
+    <div class="flex flex-wrap gap-1.5 border-b border-[#1c2734] bg-[#0e141b] px-4 py-2 font-mono-tech text-[11px]">
+      {['help', 'whoami', 'impact', 'stack', 'cases', 'experience', 'contact', 'pdf', 'lang ua', 'lang en'].map((cmd) => (
+        <button
+          type="button"
+          data-cli-cmd={cmd}
+          class="rounded border border-[#253344] bg-[#141d27] px-2 py-0.5 text-[#8ea5bc] hover:border-[#2dd4bf] hover:text-[#2dd4bf]"
+        >
+          {cmd}
+        </button>
+      ))}
+    </div>
+
+    <!-- Terminal output -->
+    <div id="cliOutput" class="h-72 overflow-y-auto px-4 py-3 font-mono-tech text-xs leading-relaxed text-[#d7e5f0] sm:h-80"></div>
+
+    <!-- Command input -->
+    <form id="cliForm" class="flex items-center gap-2 border-t border-[#223040] bg-[#101720] px-4 py-2.5 font-mono-tech text-xs">
+      <span class="text-[#2dd4bf]">$</span>
+      <input
+        id="cliInput"
+        type="text"
+        autocomplete="off"
+        spellcheck="false"
+        placeholder="Type a command (help, whoami, stack, cases, pdf, lang ua)..."
+        class="w-full bg-transparent text-[#edf2f7] placeholder-[#64788c] focus:outline-none"
+      />
+      <button
+        type="submit"
+        class="rounded bg-[#2dd4bf] px-2.5 py-1 text-[11px] font-semibold text-[#071314] hover:opacity-90"
+      >
+        Run
+      </button>
+    </form>
+  </dialog>
+
+  <script id="cv-cli-data" type="application/json" set:html={JSON.stringify(cliPayload)} />
+
+  <script>
+    // 1. Language Switcher (EN / UA)
+    const langButtons = document.querySelectorAll<HTMLButtonElement>('[data-lang-btn]');
+    function applyLang(lang: 'en' | 'ua', persist = true) {
+      document.documentElement.dataset.lang = lang;
+      document.documentElement.lang = lang === 'ua' ? 'uk' : 'en';
+      langButtons.forEach((btn) => {
+        const active = btn.dataset.langBtn === lang;
+        btn.setAttribute('aria-pressed', String(active));
+        btn.style.backgroundColor = active ? 'var(--accent-soft)' : 'transparent';
+        btn.style.color = active ? 'var(--accent)' : 'var(--ink-secondary)';
+      });
+      if (persist) {
+        try { localStorage.setItem('cv-lang', lang); } catch {}
+      }
+      updateFilterBanner();
+    }
+
+    const initLang = (document.documentElement.dataset.lang === 'ua' ? 'ua' : 'en') as 'en' | 'ua';
+    langButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const next = btn.dataset.langBtn === 'ua' ? 'ua' : 'en';
+        applyLang(next, true);
+      });
+    });
+
+    // 2. Dark Mode Toggle (modern-web-guidance dark-mode-toggle: two-state reverting to system)
+    const metaScheme = document.querySelector<HTMLMetaElement>('meta[name="color-scheme"]');
+    const themeToggle = document.getElementById('themeToggle');
+    const darkMq = window.matchMedia('(prefers-color-scheme: dark)');
+
+    function getStoredScheme(): 'light' | 'dark' | null {
+      try {
+        const v = localStorage.getItem('color-scheme');
+        return v === 'light' || v === 'dark' ? v : null;
+      } catch {
+        return null;
+      }
+    }
+
+    function applyScheme(value: 'light' | 'dark' | null) {
+      if (metaScheme) metaScheme.content = value ?? 'light dark';
+    }
+
+    function toggleTheme() {
+      const systemScheme = darkMq.matches ? 'dark' : 'light';
+      const renderedScheme = getStoredScheme() ?? systemScheme;
+      const target = renderedScheme === 'dark' ? 'light' : 'dark';
+      if (target === systemScheme) {
+        try { localStorage.removeItem('color-scheme'); } catch {}
+        applyScheme(null);
+      } else {
+        try { localStorage.setItem('color-scheme', target); } catch {}
+        applyScheme(target);
+      }
+    }
+
+    themeToggle?.addEventListener('click', toggleTheme);
+    window.addEventListener('storage', (e) => {
+      if (e.key === 'color-scheme') applyScheme(getStoredScheme());
+      if (e.key === 'cv-lang' && (e.newValue === 'en' || e.newValue === 'ua')) applyLang(e.newValue, false);
+    });
+
+    // 3. One-click Copy Email
+    const copyBtn = document.getElementById('copyEmailBtn');
+    const copyFeedback = document.getElementById('copyFeedback');
+    copyBtn?.addEventListener('click', async () => {
+      const email = copyBtn.dataset.email ?? '';
+      try {
+        await navigator.clipboard.writeText(email);
+        if (copyFeedback) {
+          const isUa = document.documentElement.dataset.lang === 'ua';
+          copyFeedback.textContent = isUa ? 'скопійовано ✓' : 'copied ✓';
+          setTimeout(() => {
+            copyFeedback.innerHTML = '<span data-i18n="en">copy</span><span data-i18n="ua">копіювати</span>';
+          }, 1800);
+        }
+      } catch {
+        window.location.href = `mailto:${email}`;
+      }
+    });
+
+    // 4. Interactive Stack Filter
+    let activeTag: string | null = null;
+    const chipButtons = document.querySelectorAll<HTMLButtonElement>('[data-filter-tag]');
+    const filterCards = document.querySelectorAll<HTMLElement>('.filterable-card');
+    const filterStatus = document.getElementById('filterStatus');
+    const filterStatusText = document.getElementById('filterStatusText');
+    const clearFilterBtn = document.getElementById('clearFilterBtn');
+
+    function updateFilterBanner() {
+      if (!filterStatus || !filterStatusText) return;
+      if (!activeTag) {
+        filterStatus.classList.add('hidden');
+        filterStatus.classList.remove('flex');
+        return;
+      }
+      let matchedCount = 0;
+      filterCards.forEach((c) => {
+        if (c.dataset.matched === 'true') matchedCount++;
+      });
+      const isUa = document.documentElement.dataset.lang === 'ua';
+      filterStatusText.textContent = isUa
+        ? `Фільтр: ${activeTag} (${matchedCount} збігів)`
+        : `Filter: ${activeTag} (${matchedCount} matches)`;
+      filterStatus.classList.remove('hidden');
+      filterStatus.classList.add('flex');
+    }
+
+    function setFilter(tag: string | null) {
+      activeTag = activeTag === tag ? null : tag;
+      chipButtons.forEach((b) => {
+        b.setAttribute('aria-pressed', String(b.dataset.filterTag === activeTag));
+      });
+      filterCards.forEach((card) => {
+        if (!activeTag) {
+          card.removeAttribute('data-dimmed');
+          card.removeAttribute('data-matched');
+          return;
+        }
+        const tags = (card.dataset.tags ?? '').split('|').map((t) => t.toLowerCase());
+        const hit = tags.includes(activeTag.toLowerCase());
+        card.dataset.dimmed = hit ? 'false' : 'true';
+        card.dataset.matched = hit ? 'true' : 'false';
+      });
+      updateFilterBanner();
+    }
+
+    chipButtons.forEach((btn) => {
+      btn.addEventListener('click', () => setFilter(btn.dataset.filterTag ?? null));
+    });
+    clearFilterBtn?.addEventListener('click', () => setFilter(null));
+    applyLang(initLang, false);
+
+    // 5. Interactive CLI Modal (<dialog closedby="any"> + Safari fallback)
+    const cliDialog = document.getElementById('cliDialog') as HTMLDialogElement | null;
+    const openCliBtn = document.getElementById('openCliBtn');
+    const cliOutput = document.getElementById('cliOutput');
+    const cliForm = document.getElementById('cliForm');
+    const cliInput = document.getElementById('cliInput') as HTMLInputElement | null;
+    const dataEl = document.getElementById('cv-cli-data');
+    const cvData = dataEl ? JSON.parse(dataEl.textContent || '{}') : {};
+
+    function appendLine(html: string) {
+      if (!cliOutput) return;
+      const div = document.createElement('div');
+      div.className = 'mb-2 whitespace-pre-wrap';
+      div.innerHTML = html;
+      cliOutput.appendChild(div);
+      cliOutput.scrollTop = cliOutput.scrollHeight;
+    }
+
+    function esc(s: string) {
+      return String(s).replace(/[&<>"']/g, (m) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]!));
+    }
+
+    function runCommand(rawCmd: string) {
+      const cmd = rawCmd.trim();
+      if (!cmd) return;
+      const lang = (document.documentElement.dataset.lang === 'ua' ? 'ua' : 'en') as 'en' | 'ua';
+      appendLine(`<span style="color:#2dd4bf;">$ ${esc(cmd)}</span>`);
+      const lower = cmd.toLowerCase();
+
+      if (lower === 'help') {
+        appendLine(
+          [
+            'Available commands:',
+            '  whoami       — profile & positioning',
+            '  impact       — key production metrics',
+            '  stack        — core skills by domain',
+            '  cases        — featured architecture case studies',
+            '  experience   — career timeline',
+            '  contact      — email, LinkedIn, GitHub',
+            '  pdf          — download ATS-friendly PDF resume',
+            '  llms         — open /llms.txt (AI-readable CV)',
+            '  lang en|ua   — switch interface language',
+            '  theme        — toggle light / dark theme',
+            '  clear | exit — clear output or close terminal',
+          ].join('\n')
+        );
+      } else if (lower === 'whoami') {
+        appendLine(
+          `<strong>${esc(cvData.name?.[lang])}</strong> — ${esc(cvData.title?.[lang])}\n${esc(cvData.location?.[lang])}\n${esc(cvData.site)}`
+        );
+      } else if (lower === 'impact') {
+        const lines = (cvData.impact || []).map(
+          (m: any) => `• <span style="color:#2dd4bf;">${esc(m.value)} ${esc(m.unit[lang])}</span> — ${esc(m.label[lang])} (${esc(m.detail[lang])})`
+        );
+        appendLine(lines.join('\n'));
+      } else if (lower === 'stack') {
+        const lines = (cvData.skills || []).map(
+          (s: any) => `<span style="color:#f59e0b;">[${esc(s.category[lang])}]</span> ${esc(s.items.join(', '))}`
+        );
+        appendLine(lines.join('\n'));
+      } else if (lower === 'cases') {
+        const lines = (cvData.cases || []).map(
+          (c: any) => `#${esc(c.number)} <strong>${esc(c.title[lang])}</strong>\n   ${esc(c.metric[lang])}\n   Flow: ${esc(c.flow)}`
+        );
+        appendLine(lines.join('\n\n'));
+      } else if (lower === 'experience') {
+        const lines = (cvData.experience || []).map(
+          (e: any) => `• ${esc(e.period[lang])} — <strong>${esc(e.role[lang])}</strong> @ ${esc(e.company[lang])}`
+        );
+        appendLine(lines.join('\n'));
+      } else if (lower === 'contact') {
+        appendLine(
+          `Email:    ${esc(cvData.email)}\nLinkedIn: ${esc(cvData.linkedin)}\nGitHub:   ${esc(cvData.github)}\nWeb CV:   ${esc(cvData.site)}`
+        );
+      } else if (lower === 'pdf') {
+        appendLine('Downloading /Oleksiy_Stetsyuk_CV.pdf ...');
+        const a = document.createElement('a');
+        a.href = cvData.pdf || '/Oleksiy_Stetsyuk_CV.pdf';
+        a.download = 'Oleksiy_Stetsyuk_CV.pdf';
+        a.click();
+      } else if (lower === 'llms') {
+        window.open('/llms.txt', '_blank', 'noopener');
+        appendLine('Opened /llms.txt in a new tab.');
+      } else if (lower === 'lang ua' || lower === 'lang uk') {
+        applyLang('ua', true);
+        appendLine('Мову перемкнуто на українську (UA).');
+      } else if (lower === 'lang en') {
+        applyLang('en', true);
+        appendLine('Language switched to English (EN).');
+      } else if (lower === 'theme') {
+        toggleTheme();
+        appendLine('Color scheme toggled.');
+      } else if (lower === 'clear') {
+        if (cliOutput) cliOutput.innerHTML = '';
+      } else if (lower === 'exit' || lower === 'quit') {
+        cliDialog?.close();
+      } else {
+        appendLine(`<span style="color:#f59e0b;">Unknown command:</span> ${esc(cmd)}. Type <strong>help</strong>.`);
+      }
+    }
+
+    function openCli() {
+      if (!cliDialog) return;
+      if (cliOutput && cliOutput.childElementCount === 0) {
+        appendLine(
+          `<span style="color:#9bb0c4;">Oleksiy Stetsyuk // Interactive SRE CV Console</span>\nType <span style="color:#2dd4bf;">help</span> or click a command chip above.`
+        );
+      }
+      cliDialog.showModal();
+      cliInput?.focus();
+    }
+
+    openCliBtn?.addEventListener('click', openCli);
+    document.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        if (cliDialog?.open) cliDialog.close();
+        else openCli();
+      }
+    });
+
+    cliForm?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!cliInput) return;
+      runCommand(cliInput.value);
+      cliInput.value = '';
+    });
+
+    document.querySelectorAll<HTMLButtonElement>('[data-cli-cmd]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        runCommand(btn.dataset.cliCmd ?? '');
+        cliInput?.focus();
+      });
+    });
+
+    // Safari fallback for <dialog closedby="any"> (modern-web-guidance light-dismiss-a-dialog)
+    if (cliDialog && !('closedBy' in HTMLDialogElement.prototype)) {
+      cliDialog.addEventListener('click', (event) => {
+        if (event.target !== cliDialog) return;
+        const rect = cliDialog.getBoundingClientRect();
+        const isInside =
+          rect.top <= event.clientY &&
+          event.clientY <= rect.top + rect.height &&
+          rect.left <= event.clientX &&
+          event.clientX <= rect.left + rect.width;
+        if (!isInside) cliDialog.close();
+      });
+    }
+  </script>
+</BaseLayout>
